@@ -1,3 +1,14 @@
+/*
+	Maxflow.js
+	Copyright (C) 2013, PG Tsai
+	Released under the MIT license.
+
+	If there's any bug in it.
+	Please report the bug to https://github.com/itsPG/maxflow.js
+	Thank you. 
+
+*/
+
 ;(function(){var PG_mincost_maxflow_core = function()
 {
 	var r = 
@@ -201,7 +212,7 @@ var PG_flow_input = function(size_in)
 	return r;
 }
 
-var PG_mincost_maxflow = function()
+var PG_mincost_maxflow = function(size_in)
 {
 	var r =
 	{
@@ -232,35 +243,17 @@ var PG_mincost_maxflow = function()
 			console.log(result);
 		},
 	}
+	if (typeof(size_in) != "undefined") r.init(size_in);
 	return r;
 }
-
-function test()
-{
-	var final = PG_mincost_maxflow();
-	
-	final.init(5);
-	final.set_edges([
-		[0, 2, 100, 100],
-		[2, 1, 100, 100],
-	]);
-	final.go(0, 1);
-	final.init(5);
-	final.set_edges([
-		[0, 2, 10, 3],
-		[0, 3, 10, 5],
-		[2, 3, 1, 100],
-		[2, 1, 10, 7],
-		[3, 1, 10, 11],
-	]);
-	final.go(0, 1);
-}
-
-//test();
 
 if (typeof(GLOBAL) === "undefined")
 {
 	window.PG_mincost_maxflow = PG_mincost_maxflow;
+}
+else
+{
+	module.exports = PG_mincost_maxflow;
 }
 
 
