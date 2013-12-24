@@ -1,4 +1,4 @@
-var PG_mincost_maxflow_core = function()
+;(function(){var PG_mincost_maxflow_core = function()
 {
 	var r = 
 	{
@@ -9,7 +9,7 @@ var PG_mincost_maxflow_core = function()
 		path: [],
 		distance: [],
 		path_history: [],
-		node_max: 5,
+		node_max: 100,
 		init_graph: function()
 		{
 			this.origin_cap = [];
@@ -31,11 +31,11 @@ var PG_mincost_maxflow_core = function()
 		},
 		set_graph: function(cap_in, cost_in)
 		{
-
 			for (var i = 0; i < this.node_max; i++)
 			{
 				for (var j = 0; j < this.node_max; j++)
 				{
+
 					this.origin_cap[i][j] = cap_in[i][j];
 					this.weight[i][j] = cost_in[i][j];
 				}
@@ -154,7 +154,7 @@ var PG_mincost_maxflow_core = function()
 					}
 				}
 				this.path_history.push({flow: flow_tmp, path: path_tmp});
-				console.log(this.path_history[this.path_history.length-1]);
+				//console.log(this.path_history[this.path_history.length-1]);
 				flow_ans += flow_tmp;
 				cost_ans += flow_tmp * cost_tmp;
 			}
@@ -207,6 +207,7 @@ var PG_mincost_maxflow = function()
 	{
 		core: 0,
 		graph: 0,
+
 		init: function(size_in)
 		{
 			this.core = PG_mincost_maxflow_core();
@@ -224,29 +225,43 @@ var PG_mincost_maxflow = function()
 				this.set_edge(edges[i][0], edges[i][1], edges[i][2], edges[i][3]);
 			}
 		},
-		go: function()
+		go: function(from, to)
 		{
 			this.core.set_graph(this.graph.graph, this.graph.cost);
-			var result = this.core.mincost_maxflow(0, 1);
+			var result = this.core.mincost_maxflow(from, to);
 			console.log(result);
 		},
 	}
 	return r;
 }
 
-var final = PG_mincost_maxflow();
-final.init(5);
-final.set_edges([
-	[0, 2, 100, 100],
-	[2, 1, 100, 100],
-]);
-final.go();
-final.init(5);
-final.set_edges([
-	[0, 2, 10, 3],
-	[0, 3, 10, 5],
-	[2, 3, 1, 100],
-	[2, 1, 10, 7],
-	[3, 1, 10, 11],
-]);
-final.go();
+function test()
+{
+	var final = PG_mincost_maxflow();
+	
+	final.init(5);
+	final.set_edges([
+		[0, 2, 100, 100],
+		[2, 1, 100, 100],
+	]);
+	final.go(0, 1);
+	final.init(5);
+	final.set_edges([
+		[0, 2, 10, 3],
+		[0, 3, 10, 5],
+		[2, 3, 1, 100],
+		[2, 1, 10, 7],
+		[3, 1, 10, 11],
+	]);
+	final.go(0, 1);
+}
+
+//test();
+
+if (typeof(GLOBAL) === "undefined")
+{
+	window.PG_mincost_maxflow = PG_mincost_maxflow;
+}
+
+
+}());
