@@ -218,6 +218,7 @@ var PG_mincost_maxflow = function(size_in)
 	{
 		core: 0,
 		graph: 0,
+		result: 0,
 
 		init: function(size_in)
 		{
@@ -239,8 +240,8 @@ var PG_mincost_maxflow = function(size_in)
 		go: function(from, to)
 		{
 			this.core.set_graph(this.graph.graph, this.graph.cost);
-			var result = this.core.mincost_maxflow(from, to);
-			console.log(result);
+			this.result = this.core.mincost_maxflow(from, to);
+			return this.result;
 		},
 	}
 	if (typeof(size_in) != "undefined") r.init(size_in);

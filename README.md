@@ -35,8 +35,13 @@ the element of this array should be like [from, to, capability, unit cost]
 
 ### 4. Set source and sink, and go.
 
-	flow.go(0, 1);
+	var result = flow.go(0, 1);
 	// Start the flow algorithm. Set the #0 node as source and the #1 as sink. 
+
+### 5. Check the path_history (if needed)
+
+	console.log(flow.core.path_history);
+	// You may check .core.path_history to see the details.
 
 ## License
 
